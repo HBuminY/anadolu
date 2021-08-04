@@ -11,7 +11,7 @@ app.use("/", router);
 const http = require("http");
 const server = http.createServer(app);
 
-const PORT = listener.address().port;
+const PORT = process.env.PORT;
 
 // WEBSOCKETS
 const WebSocketServer = require("ws").Server;
@@ -34,7 +34,7 @@ wss.on('connection', (ws)=>{
 //#endregion
 
 //#region LISTEN FOR REQUESTS
-server.listen(PORT, ()=>{
-    console.log("listening at localhost:5555");
+const listener = server.listen(PORT, ()=>{
+    console.log("listening at port "+ listener.address().port);
 });
 //#endregion
