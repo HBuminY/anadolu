@@ -11,7 +11,7 @@ app.use("/", router);
 const http = require("http");
 const server = http.createServer(app);
 
-const PORT = 5555; //listener.address().port;
+const PORT = listener.address().port;
 
 // WEBSOCKETS
 const WebSocketServer = require("ws").Server;
