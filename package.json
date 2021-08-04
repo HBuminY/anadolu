@@ -1,0 +1,22 @@
+{
+  "name": "anadolu",
+  "version": "1.0.0",
+  "description": "web app for anadolu the game",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HBuminY/anadolu.git"
+  },
+  "author": "hby",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HBuminY/anadolu/issues"
+  },
+  "homepage": "https://github.com/HBuminY/anadolu#readme",
+  "dependencies": {
+    "express.js": "^1.0.0"
+  }
+}
