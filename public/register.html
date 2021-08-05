@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Home</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/sources/register.css'>
+    <script src='/sources/register.js'></script>
+</head>
+<body>
+    <h1>Anadolu</h1>
+
+    <p>Register Page for Anadolu Game</p>
+
+    <form action="#" onsubmit="register(); return false">
+        <p>Usernames must be minimum 3 maximum 10 characters long</p>
+        <input minlength="3" maxlength="10" type="text" autocomplete="username" name="username" id="nameInp" placeholder="username">
+        <p>Passwords must be minimum 7 maximum 15 characters long</p>
+        <input minlength="7" maxlength="15" type="password" autocomplete="current-password" name="password" id="pswInp" placeholder="password">
+        <input type="submit" id="registerBtn" value="Register">
+    </form>
+
+</body>
+</html>
