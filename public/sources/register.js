@@ -1,4 +1,4 @@
-let url = `ws://${window.location.hostname}:${window.location.port}/ws`
+let url = `wss://${window.location.hostname}:${window.location.port}/ws`
 let ws = new WebSocket(url);
 
 /*
