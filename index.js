@@ -27,15 +27,17 @@ if(portMode == "test"){
 const WebSocketServer = require("ws").Server;
 const ws = new WebSocketServer({server: server, path: "/ws"});
 
-//FILESYSTEM
+//OTHER
 const fs = require("fs");
+const { v4: uuidv4 } = require('uuid');
 //#endregion
 
 
 //#region FILE SYSTEM
 let accountsObj;
+const accountsDoc = __dirname+"/database/accounts.json";
 
-fs.readFile(__dirname+"/database/accounts.json", (err, data)=>{
+fs.readFile(accountsDoc, (err, data)=>{
     accountsObj = JSON.parse(data);
 });
 //#endregion
@@ -55,8 +57,10 @@ ws.on('connection', (ws)=>{
     ws.on('message', (message)=>{
         try {
             let msg = JSON.parse(message);
-            if(msg.type=="regObj"){
-                console.log("register data arrived");
+            if(portMode=="test"){console.log(msg);};
+
+            if(msg.type=="regObj"){ //HANDLING REGISTER REQUEST
+                console.log("register request arrived");
 
                 let data = msg.data;
                 let username = data.username;
@@ -69,14 +73,45 @@ ws.on('connection', (ws)=>{
                 ];
 
                 if (!registerCondition.includes(false)) {
-                    console.log("valid register");
+                    accountsObj[username]={
+                        "password":password,
+                        "id":uuidv4()
+                    };
+                    fs.writeFile(accountsDoc, JSON.stringify(accountsObj), (err)=>{
+                        if (err) throw err;
+                    });
+                    ws.send(JSON.stringify({"type":"registered"}));
                 }
 
                 ws.send("register request recieved");
             };
 
-        } catch (e) {
-            console.log("unvalid message", e);
+            if(msg.type=="loginObj"){ //HANDLING LOGIN REQUEST
+                console.log("login request arrived");
+
+                let data = msg.data;
+                let username = data.username;
+                let password = data.password;
+
+                const loginCondition = [
+                    accountsObj[username]!==undefined,
+                    password==accountsObj[username].password
+                ];
+
+                if (!loginCondition.includes(false)) {
+                    ws.send(JSON.stringify(
+                        {
+                            "type":"logged",
+                            "id":accountsObj[username].id
+                        }
+                    ));
+                }
+
+                ws.send("register request recieved");
+            };
+
+        } catch (err) {
+            console.log("unvalid message\n", err);
         };
     });
 });

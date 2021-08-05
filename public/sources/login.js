@@ -28,24 +28,23 @@ ws.onmessage = (msg)=>{
         console.log(data);
 
         if(data.type=="logged"){
-            document.getElementById("notify").innerText="Your Account is Succesfully Created"
+            console.log(data.id);
         };
     } catch (err) {
         console.log("unvalid message\n"+err);
     }
 };
 
-function register(){
+function login(){
     let nameElem = document.getElementById("nameInp");
     let pswElem = document.getElementById("pswInp");
 
     let regObject = {
-        "type":"regObj",
+        "type":"loginObj",
         "data":{
             "username":nameElem.value,
             "password":pswElem.value
         }
     }
-    nameElem.value=""; pswElem.value="";
     ws.send(JSON.stringify(regObject));
 };
