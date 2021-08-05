@@ -1,5 +1,5 @@
 //#region settings
-const portMode = "test"  // test or build as string
+const portMode = "build"  // test or build as string
 //#endregion
 
 
