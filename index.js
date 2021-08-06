@@ -1,5 +1,5 @@
 //#region settings
-const portMode = "build"  // test or build as string
+const portMode = "test"  // test or build as string
 //#endregion
 
 
@@ -45,7 +45,7 @@ fs.readFile(accountsDoc, (err, data)=>{
 
 //#region EXPRESS EVENTS
 app.get("/", (req, res) => {
-    res.sendFile(__dirname+"/public/home.html");
+    res.sendFile(__dirname+"/public/newcomer.html");
 });
 //#endregion
 
@@ -95,7 +95,7 @@ ws.on('connection', (ws)=>{
 
                 const loginCondition = [
                     accountsObj[username]!==undefined,
-                    password==accountsObj[username].password
+                    accountsObj[username]!==undefined ? password==accountsObj[username].password : false
                 ];
 
                 if (!loginCondition.includes(false)) {
@@ -105,13 +105,19 @@ ws.on('connection', (ws)=>{
                             "id":accountsObj[username].id
                         }
                     ));
-                }
-
-                ws.send("register request recieved");
+                    console.log("login request accepted");
+                }else{
+                    ws.send(JSON.stringify(
+                        {
+                            "type":"unvalidLogin"
+                        }
+                    ));
+                };
             };
 
         } catch (err) {
             console.log("unvalid message\n", err);
+            console.log("\n"+message);
         };
     });
 });
