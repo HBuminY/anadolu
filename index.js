@@ -45,11 +45,11 @@ fs.readFile(accountsDoc, (err, data)=>{
 
 //#region EXPRESS EVENTS
 app.get("/", (req, res) => {
-    res.sendFile(__dirname+"/public/newcomer.html");
+    res.sendFile(__dirname+"/public/new/newcomer.html");
 });
 
 app.get("/u/:username",(req, res)=>{
-    res.sendFile(__dirname+"/public/user.html");
+    res.sendFile(__dirname+"/public/spe/user.html");
 });
 //#endregion
 
