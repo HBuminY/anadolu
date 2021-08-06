@@ -1,7 +1,3 @@
-if(localStorage.getItem("id")===null){
-    window.location.replace("/");
-}
-
 function menuClicked(){
     let navbar = document.getElementById("navbar");
 
