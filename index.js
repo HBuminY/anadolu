@@ -107,7 +107,8 @@ ws.on('connection', (ws)=>{
                     ws.send(JSON.stringify(
                         {
                             "type":"logged",
-                            "id":accountsObj[username].id
+                            "id":accountsObj[username].id,
+                            "username":username
                         }
                     ));
                     console.log("login request accepted");

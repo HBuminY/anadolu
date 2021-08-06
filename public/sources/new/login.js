@@ -32,6 +32,7 @@ ws.onmessage = (msg)=>{
         if(data.type=='logged'){
             console.log("logged in");
             localStorage.setItem("id",data.id);
+            localStorage.setItem("username",data.username);
             window.location.replace("/home.html");
         };
 

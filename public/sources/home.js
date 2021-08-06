@@ -2,6 +2,9 @@ if(localStorage.getItem("id")===null){
     window.location.replace("/");
 }
 
+let profileBtn = document.getElementById("profileBtn");
+profileBtn.href = "/u/"+localStorage.getItem("username");
+
 function menuClicked(){
     let navbar = document.getElementById("navbar");
 
