@@ -47,6 +47,10 @@ fs.readFile(accountsDoc, (err, data)=>{
 app.get("/", (req, res) => {
     res.sendFile(__dirname+"/public/newcomer.html");
 });
+
+app.get("/u/:username",(req, res)=>{
+    res.sendFile(__dirname+"/public/user.html");
+});
 //#endregion
 
 
@@ -75,7 +79,8 @@ ws.on('connection', (ws)=>{
                 if (!registerCondition.includes(false)) {
                     accountsObj[username]={
                         "password":password,
-                        "id":uuidv4()
+                        "id":uuidv4(),
+                        "tpoint":0
                     };
                     fs.writeFile(accountsDoc, JSON.stringify(accountsObj), (err)=>{
                         if (err) throw err;
