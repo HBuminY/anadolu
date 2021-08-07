@@ -51,6 +51,28 @@ app.get("/", (req, res) => {
 app.get("/u/:username",(req, res)=>{
     res.sendFile(__dirname+"/public/spe/user.html");
 });
+
+app.get("/get/:type&:target", (req, res)=>{
+    console.log(req.params);
+    if(req.params.type=="userdata"){
+        console.log("1");
+        if(accountsObj[req.params.target]!=undefined){
+            let user = accountsObj[req.params.target];
+            res.send(JSON.stringify(
+                {
+                    "err":"",
+                    "tpoint":user.tpoint
+                }
+            ));
+        }else{
+            res.send(JSON.stringify(
+                {
+                    "err":"unvalid user"
+                }
+            ));
+        }
+    };
+});
 //#endregion
 
 
@@ -64,7 +86,7 @@ ws.on('connection', (ws)=>{
             if(portMode=="test"){console.log(msg);};
 
             if(msg.type=="regObj"){ //HANDLING REGISTER REQUEST
-                console.log("register request arrived");
+                console.log("register request recieved");
 
                 let data = msg.data;
                 let username = data.username;
@@ -87,8 +109,6 @@ ws.on('connection', (ws)=>{
                     });
                     ws.send(JSON.stringify({"type":"registered"}));
                 }
-
-                ws.send("register request recieved");
             };
 
             if(msg.type=="loginObj"){ //HANDLING LOGIN REQUEST

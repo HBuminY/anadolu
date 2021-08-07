@@ -24,7 +24,8 @@
   },
   "nodemonConfig": {
     "ignore": [
-      "public/*"
+      "public/*",
+      "database/*"
     ]
   }
 }

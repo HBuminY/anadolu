@@ -27,7 +27,7 @@ ws.onmessage = (msg)=>{
         data = JSON.parse(data);
         console.log(data);
 
-        if(data.type=="logged"){
+        if(data.type=="registered"){
             document.getElementById("notify").innerText="Your Account is Succesfully Created"
         };
     } catch (err) {
