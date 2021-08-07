@@ -1,1 +1,6 @@
-{"hbuminy":{"password":"abc123123","id":0,"tpoint":20},"xBumkaXXxx":{"password":"123123123123","id":"00ce5ad4-bf3f-46df-ab37-43a6f6a178bc","tpoint":0}}
+{
+    "hbuminy":{
+        "password":"abc123123",
+        "id":0,"tpoint":20
+    }
+}

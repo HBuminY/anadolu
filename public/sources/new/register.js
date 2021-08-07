@@ -23,29 +23,36 @@ ws.onopen = () => {
 
 ws.onmessage = (msg)=>{
     let data = msg.data;
+    let notify = document.getElementById("notify");
     try {
         data = JSON.parse(data);
         console.log(data);
 
         if(data.type=="registered"){
-            document.getElementById("notify").innerText="Your Account is Succesfully Created"
+            notify.style.color="green"
+            notify.innerText="Your Account is Succesfully Created"
+        }else if(data.type=="unvalid regObj"){
+            notify.style.color="red"
+            notify.innerText=data.errArr.toString().replace(/,/g, "\n")
         };
     } catch (err) {
-        console.log("unvalid message\n"+err);
+        console.log(err);
     }
 };
 
 function register(){
     let nameElem = document.getElementById("nameInp");
     let pswElem = document.getElementById("pswInp");
+    let emailElem = document.getElementById("emailInp");
 
     let regObject = {
         "type":"regObj",
         "data":{
             "username":nameElem.value,
-            "password":pswElem.value
+            "password":pswElem.value,
+            "email":emailElem.value
         }
     }
-    nameElem.value=""; pswElem.value="";
+    pswElem.value="";
     ws.send(JSON.stringify(regObject));
 };

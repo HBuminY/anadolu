@@ -23,6 +23,11 @@ if(portMode == "test"){
     PORT = process.env.PORT;
 };
 
+function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
 // WEBSOCKETS
 const WebSocketServer = require("ws").Server;
 const ws = new WebSocketServer({server: server, path: "/ws"});
@@ -37,9 +42,12 @@ const { v4: uuidv4 } = require('uuid');
 let accountsObj;
 const accountsDoc = __dirname+"/database/accounts.json";
 
-fs.readFile(accountsDoc, (err, data)=>{
-    accountsObj = JSON.parse(data);
-});
+function updateAccObj(){
+    fs.readFile(accountsDoc, (err, data)=>{
+        accountsObj = JSON.parse(data);
+    });
+}
+updateAccObj();
 //#endregion
 
 
@@ -89,18 +97,33 @@ ws.on('connection', (ws)=>{
                 console.log("register request recieved");
 
                 let data = msg.data;
-                let username = data.username;
+                let username = data.username.toLowerCase();
                 let password = data.password;
+                let email = data.email;
 
                 const registerCondition = [
                     accountsObj[username]==undefined,
                     username.length<=10,
-                    username.length>=3
+                    username.length>=3,
+                    password.length<=15,
+                    password.length>=7,
+                    validateEmail(email)
                 ];
+                const badRegMessages = [
+                    "existing name",
+                    "username must be shorther than 10 characters",
+                    "username must be longer than 3 characters",
+                    "password must be shorther than 15 characters",
+                    "password must be longer than 7 characters",
+                    "unvalid email"
+                ]
+
+                console.log(registerCondition);
 
                 if (!registerCondition.includes(false)) {
                     accountsObj[username]={
                         "password":password,
+                        "email":email,
                         "id":uuidv4(),
                         "tpoint":0
                     };
@@ -108,6 +131,20 @@ ws.on('connection', (ws)=>{
                         if (err) throw err;
                     });
                     ws.send(JSON.stringify({"type":"registered"}));
+                }else{
+                    var errArr=[];
+                    for(let i=0; i<registerCondition.filter(x => x === false).length; i++){
+                        let errIndex = registerCondition.indexOf(false,-i);
+                        let errMsg = badRegMessages[errIndex];
+                        errArr.push(errMsg);
+                    };
+                    console.log(errArr);
+                    ws.send(JSON.stringify(
+                        {  
+                            "type":"unvalid regObj",
+                            "errArr":errArr
+                        }
+                    ));
                 }
             };
 
