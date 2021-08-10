@@ -81,6 +81,21 @@ app.get("/get/:type&:target", (req, res)=>{
         }
     };
 });
+
+app.get("/test", (req, res)=>{
+    let authObj = JSON.parse(req.headers.authorization);
+    let username = authObj.username;
+    let password = authObj.password;
+    if(username in accountsObj){
+        if(password == accountsObj[username].password){
+            res.sendStatus("202");
+        }else{
+            res.sendStatus("401");
+        };
+    }else{
+        res.sendStatus("401");
+    };
+});
 //#endregion
 
 
@@ -152,7 +167,7 @@ ws.on('connection', (ws)=>{
                 console.log("login request arrived");
 
                 let data = msg.data;
-                let username = data.username;
+                let username = data.username.toLowerCase();
                 let password = data.password;
 
                 const loginCondition = [

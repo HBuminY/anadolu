@@ -1,0 +1,11 @@
+<script>
+    let url = 'http://192.168.1.106:8585/test';
+    let settings = {
+        headers:{
+            'Authorization':'{"username":"wer", "password":"qwe"}'
+        }
+    };
+
+    let data = null;
+    fetch(url, settings).then(res => console.log(res.status))
+</script>

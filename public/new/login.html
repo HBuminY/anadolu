@@ -9,16 +9,19 @@
     <script src='/sources/new/login.js'></script>
 </head>
 <body>
-    <h1>Anadolu</h1>
+    <div id="main">
+        <div class="panel">
+            <h1>Anadolu</h1>
 
-    <p>Login Page for Anadolu Game</p>
+            <p>Login Page for Anadolu Game</p>
 
-    <p style="color: red;" id="notify"></p>
-    <form action="#" onsubmit="login(); return false">
-        <input minlength="3" maxlength="10" type="text" autocomplete="username" name="username" id="nameInp" placeholder="username">
-        <input minlength="7" maxlength="15" type="password" autocomplete="current-password" name="password" id="pswInp" placeholder="password">
-        <input type="submit" id="registerBtn" value="Login">
-    </form>
-
+            <p style="color: red;" id="notify"></p>
+            <form action="#" onsubmit="login(); return false">
+                <input minlength="3" maxlength="10" type="text" autocomplete="username" name="username" id="nameInp" placeholder="username">
+                <input minlength="7" maxlength="15" type="password" autocomplete="current-password" name="password" id="pswInp" placeholder="password">
+                <input type="submit" id="registerBtn" value="Login">
+            </form>
+        </div>
+    </div>
 </body>
 </html>

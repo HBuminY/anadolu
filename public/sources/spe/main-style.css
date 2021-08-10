@@ -41,12 +41,15 @@ h1{
     justify-content: space-evenly;
     align-items: center;
 }
+@media only screen and (max-width: 800px) {
+    .main{
+        align-items: flex-end;
+    }
+  }
 
 button{
     max-width: max-content;
 }
-
-
 
 #menu{
     top: 0; left: 0;
