@@ -88,7 +88,7 @@ app.get("/test", (req, res)=>{
     let password = authObj.password;
     if(username in accountsObj){
         if(password == accountsObj[username].password){
-            res.sendStatus("202");
+            res.sendStatus("200");
         }else{
             res.sendStatus("401");
         };
