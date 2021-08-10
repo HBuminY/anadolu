@@ -82,17 +82,22 @@ app.get("/get/:type&:target", (req, res)=>{
     };
 });
 
-app.get("/test", (req, res)=>{
+app.get("/test", (req, res)=>{ 
+    console.log("0");
     let authObj = JSON.parse(req.headers.authorization);
     let username = authObj.username;
     let password = authObj.password;
     if(username in accountsObj){
+        console.log("1");
         if(password == accountsObj[username].password){
+            console.log("2");
             res.sendStatus("202");
         }else{
+            console.log("3");
             res.sendStatus("401");
         };
     }else{
+        console.log("4");
         res.sendStatus("401");
     };
 });
