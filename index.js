@@ -1,5 +1,5 @@
 //#region settings
-const portMode = "build"  // test or build as string
+const portMode = "test"  // test or build as string
 //#endregion
 
 
@@ -8,7 +8,9 @@ const portMode = "build"  // test or build as string
 const express = require("express");
 const router = express.Router();
 const app = express();
+const bodyParser = require('body-parser')
 
+app.use(bodyParser.json())
 app.use(express.static("public"));
 app.use("/", router);
 
@@ -96,9 +98,22 @@ app.get("/test", (req, res)=>{
         res.sendStatus("401");
     };
 });
+
+//adding tpoint to user
+app.post("/tpoint", (req, res)=>{
+    res.sendStatus(200);
+    
+    let tpObj = req.body;
+    let username = tpObj.username;
+    let amountToAdd = tpObj.amount;
+    console.log(`body:${JSON.stringify(tpObj)}\n\nusername:${username}\namounttoadd:${amountToAdd}`);
+
+    accountsObj[username].tpoint+=amountToAdd;
+    fs.writeFile(accountsDoc, JSON.stringify(accountsObj), (err)=>{if(err){throw err}});
+});
 //#endregion
 
-
+ 
 //#region WS EVENTS
 ws.on('connection', (ws)=>{
     console.log("someone connected");
