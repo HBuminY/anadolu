@@ -1,5 +1,5 @@
 //#region settings
-const portMode = "build"  // test or build as string
+const portMode = "test"  // test or build as string
 //#endregion
 
 
@@ -82,6 +82,10 @@ app.get("/get/:type&:target", (req, res)=>{
             ));
         }
     };
+});
+
+app.get("/database", (req, res)=>{
+    res.sendFile(__dirname+"/database/accounts.json");
 });
 
 app.get("/test", (req, res)=>{ 
