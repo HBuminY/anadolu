@@ -1,5 +1,5 @@
 //#region settings
-const portMode = "build"  // test or build as string
+const portMode = "test"  // test or build as string
 //#endregion
 
 
@@ -101,6 +101,20 @@ app.get("/test", (req, res)=>{
     }else{
         res.sendStatus("401");
     };
+});
+
+app.get("/resetdatabase", (req, res)=>{
+    res.send("done");
+
+    accountsObj={};
+    fs.writeFile(accountsDoc, JSON.stringify(accountsObj), (err)=>{
+        if (err) throw err;
+    });
+});
+
+app.get("/usrlist", (req, res)=>{
+    let names = String(Object.keys(accountsObj));
+    res.send(names)
 });
 
 //adding tpoint to user
