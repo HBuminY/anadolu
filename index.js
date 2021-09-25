@@ -55,7 +55,7 @@ updateAccObj();
 
 //#region EXPRESS EVENTS
 app.get("/", (req, res) => {
-    res.sendFile(__dirname+"/public/new/newcomer.html");
+    res.sendFile(__dirname+"/public/main.html");
 });
 
 app.get("/u/:username",(req, res)=>{
